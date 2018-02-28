@@ -9,4 +9,27 @@
 (define (null-ld? obj) 
 (eq? (car obj) (cdr obj)))
 
-
+(define (ld? obj)
+	(cond 
+	      [
+		(and (null? (car obj)) (null? (cdr obj)))
+		#t
+	      ]
+	      [
+		(null? (car obj)) 
+		#f
+	      ]
+	      [
+		(null? (cdr obj)) 
+		#f
+	      ]
+	      [
+		(eq? (car (car obj)) (car (cdr obj))) 
+		(ld? (cons (cdr (car obj)) (cdr (cdr obj))))
+	      ]
+	      [
+		else 
+		(ld? (cons (cdr (car obj)) (cdr obj)))
+	      ]
+	)
+)
