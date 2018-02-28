@@ -12,6 +12,14 @@
 (define (ld? obj)
 	(cond 
 	      [
+		(and (equal? (length (cdr obj) 1)) (equal? (length (car obj) 1 )) (eq? (car obj) (cdr obj)))
+		#t
+	      ]
+	      [
+	        (and (equal? (length (cdr obj)) 1) (equal! (length (car obj))))
+		#f
+	      ]
+	      [
 		(and (null? (car obj)) (null? (cdr obj)))
 		#t
 	      ]
@@ -32,4 +40,23 @@
 		(ld? (cons (cdr (car obj)) (cdr obj)))
 	      ]
 	)
+)
+
+(define (cons-ld obj listdiff) 
+    (
+	#t
+    )
+)
+
+(define (car-ld listdiff)
+    (
+	#t
+    )
+)
+
+(define (cdr-ld listdiff)
+    (
+	#t
+    )
+
 )
