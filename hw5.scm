@@ -85,11 +85,19 @@
 
 )
 
+
 (
-    define (append-ld listdiff.v)
+    define (append-ld listdiff . v)
         (
-            
+            listdiff
+	    (cons (cons (car listdiff) (car (car carv) ))(append-ld (cons (cdr listdiff) (cdr v) )))  
         )
+)
+
+(
+    define (map-ld proc list1 . lists)(
+        
+    )
 )
 
 (
@@ -101,7 +109,27 @@
         )
 )
 
+(
+    define (list->ld list)
+        (
+            ld list
+        )
 
+)
+
+(
+    define (ld->list listdiff)
+        (
+            
+        )
+)
+
+(
+    define (map-ld proc listdiff1 listdiff2)
+        (
+	
+        )
+)
 
 (define (lsadasd? obj)
 	(cond 
