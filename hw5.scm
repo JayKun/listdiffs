@@ -118,6 +118,16 @@
 )
 
 (
+    define (memberx lst e)
+        (
+            cond [(null? lst)#f]
+	    [(?eq (car lst) e)#t]
+	    [(memberx (cdr lst) e)]
+	)
+
+)
+
+(
     define (ld->list listdiff)
         (
             
