@@ -36,6 +36,32 @@
 	)
 )
 
+(
+   define (cons-ld obj listdiff)
+	(
+	    if(and (not(null? obj)) (ld? listdiff))
+	    (cons obj listdiff)
+
+	)
+
+)
+
+(
+    define (car-ld listdiff)
+	(
+	    car listdiff
+	)
+
+)
+
+(
+    define (cdr-ld listdiff)
+        (
+	    
+	)
+)
+
+
 (define (lsadasd? obj)
 	(cond 
 	      [
