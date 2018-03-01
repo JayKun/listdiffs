@@ -36,30 +36,71 @@
 	)
 )
 
+; returns a listdiff of listdiffs
+; '('(obj) listdiff)-> ('(obj listdiff).()) -> ('(obj car())
 (
    define (cons-ld obj listdiff)
 	(
 	    if(and (not(null? obj)) (ld? listdiff))
-	    (cons obj listdiff)
-
+	    (cons (cons obj (car listdiff)) (cdr listdiff))
+	    (error "What")
 	)
 
 )
 
+; returns an element
 (
     define (car-ld listdiff)
 	(
-	    car listdiff
+	    car (car listdiff)
+	)
+
+)
+
+; returns a list in the form of a listdiff
+(
+    define (cdr-ld listdiff)
+        (
+	   cons ((cdr (car listdiff)) (cdr listdiff)) 
+	)
+)
+
+; returns a newly allocated listdiff of its argument
+; would need tail-recursioni (maybe not)
+; (obj.'())
+(
+    define (ld obj)
+	(
+	    cons(cons (car obj) (cdr obj)) '()
+	)
+)
+
+; returns a number
+(
+    define (length-ld listdiff)
+	(
+            cond [(?null-ld listdiff) 0]
+	    [else (+ 1 (length-ld (cdr-ld listdiff)))]
 	)
 
 )
 
 (
-    define (cdr-ld listdiff)
+    define (append-ld listdiff.v)
         (
-	    
-	)
+            
+        )
 )
+
+(
+    define (ld-tail listdiff k)
+        (
+             if (equal? k 0) 
+                listdiff
+	     (ld-tail (cdr-ld listdiff) (- k 1))
+        )
+)
+
 
 
 (define (lsadasd? obj)
@@ -95,21 +136,3 @@
 	)
 )
 
-(define (cons-ld obj listdiff) 
-    (
-	#t
-    )
-)
-
-(define (car-ld listdiff)
-    (
-	#t
-    )
-)
-
-(define (cdr-ld listdiff)
-    (
-	#t
-    )
-
-)
