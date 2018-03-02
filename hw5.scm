@@ -58,8 +58,8 @@
     define (cdr-ld listdiff)
         (
 	   if(or (null-ld? listdiff) (not (ld? listdiff)) )
-	   ("error")
-	   (cons ((cdr (car listdiff)) (cdr listdiff)) )
+	   (error "error")
+	   (cons (cdr (car listdiff)) (cdr listdiff))
 	)
 )
 
@@ -77,8 +77,9 @@
 (
     define (length-ld listdiff)
 	(
-            cond [(?null-ld listdiff) 0]
-	    [else (+ 1 (length-ld (cdr-ld listdiff)))]
+            if (null-ld? listdiff) 
+                0
+	    (+ 1 (length-ld (cdr-ld listdiff)))
 	)
 
 )
