@@ -1,0 +1,21 @@
+(ld? d1)                              
+(ld? d2)                              
+(ld? d3)                               
+(ld? d4)                               
+(ld? d5)                              
+(ld? d6)                               
+
+(null-ld? d1)                         
+(null-ld? d2)                         
+(null-ld? d3)                       
+(null-ld? d6)                     
+
+(car-ld d1)                    
+(car-ld d2)                         
+(car-ld d3)                        
+(car-ld d6)                           
+
+(length-ld d1)                       
+(length-ld d2)                      
+(length-ld d3)                         
+(length-ld d6)                    

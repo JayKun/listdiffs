@@ -18,10 +18,10 @@
     define (ld? obj)
 	( cond
 		[
-		    (or (not (pair? obj)) (not (pair? (car obj) ) ) (null? obj)) 		    #f
+		    (null-ld? obj) #t
 		]
 		[
-		    (null-ld? obj) #t
+		    (or (not (pair? obj)) (not (pair? (car obj) ) ) (null? obj)) 		    #f
 		]
 		[
 		    else (ld? (cons (cdr (car obj)) (cdr obj)))
@@ -46,7 +46,7 @@
 (
     define (car-ld listdiff)
 	(
-            if (null-ld? listdiff)
+            if (or (null-ld? listdiff) (not (ld? listdiff)) )
             (error "error")
 	    (car (car listdiff))
 	)
@@ -57,7 +57,7 @@
 (
     define (cdr-ld listdiff)
         (
-	   if(null-ld? listdiff)
+	   if(or (null-ld? listdiff) (not (ld? listdiff)) )
 	   ("error")
 	   (cons ((cdr (car listdiff)) (cdr listdiff)) )
 	)
