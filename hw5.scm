@@ -1,3 +1,5 @@
+
+
 ; A list is made up of pairs and one pair has the firm (car.cdr)
 ; A list of the elements 2,3 is made up like (2.(3.() ))
 ; A list that has a pair as it's cdr can be shown without the dot
@@ -84,17 +86,15 @@
 
 )
 
-
 (
-    define (append-ld listdiff . v)
-        (
-            if(null-ld? v)
-                listdiff
-            
-            (append-ld (cons (cons (car listdiff) (car (car v))) (cons (cdr listdiff) (cdr (car v) ))) (cdr v)
-        )
-	)
+    define (append-ld listdiff . args)
+    (
+                if (null-ld? args) 
+                    listdiff
+	        (append-ld (cons (append (ld->list listdiff)(car (car args))) (cdr (car args)))  (cdr args))
+    
 )
+
 
 (
     define (ld-tail listdiff k)
@@ -118,9 +118,9 @@
 (
     define (memberx lst e)
         (
-            cond [(null? lst)#f]
-	    [(?eq (car lst) e)#t]
-	    [(memberx (cdr lst) e)]
+            cond ((null? lst)#f)
+	    ((eq? (car lst) e)#t)
+	    ((memberx (cdr lst) e))
 	)
 
 )
@@ -135,7 +135,12 @@
     
 (
     define (ld->list listdiff)
-            (aux listdiff '())
+            ;(aux listdiff '())
+    (
+        if(or (not(ld? listdiff)) (null-ld? listdiff))
+        (error "error")
+        (take (car listdiff) (length-ld listdiff))
+    )
 )
 
 
