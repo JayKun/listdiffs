@@ -88,10 +88,12 @@
 (
     define (append-ld listdiff . v)
         (
-            if(null? v)
-            listdiff
-	    (cons (cons (car listdiff) (car (car v) ))(append-ld (cons (cdr listdiff) (cdr v) )))  
+            if(null-ld? v)
+                listdiff
+            
+            (append-ld (cons (cons (car listdiff) (car (car v))) (cons (cdr listdiff) (cdr (car v) ))) (cdr v)
         )
+	)
 )
 
 (
@@ -106,8 +108,9 @@
 (
     define (list->ld list)
         (
-            if(list? list)
-            ld list
+            if(not (list? list))
+            (error "error")
+            (ld cons( (car list) (cdr list) ) )
         )
 
 )
