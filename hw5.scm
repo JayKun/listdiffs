@@ -3,12 +3,6 @@
 ; A list that has a pair as it's cdr can be shown without the dot
 ; and the parents such that (2.(3.())) is the same as (2 3 .())
 
-(define ils (append '(a e i o u) 'y))
-(define d1 (cons ils (cdr (cdr ils))))
-(define d2 (cons ils ils))
-(define d3 (cons ils (append '(a e i o u) 'y)))
-(define d4 (cons '() ils))
-(define d5 0)
 
 
 (
@@ -24,10 +18,10 @@
     define (ld? obj)
 	( cond
 		[
-		    (null-ld? obj) #t
+		    (or (not (pair? obj)) (not (pair? (car obj) ) ) (null? obj)) 		    #f
 		]
 		[
-		    (or (not (pair? (car obj) ) ) (not (pair? obj)) (null? obj)) #f
+		    (null-ld? obj) #t
 		]
 		[
 		    else (ld? (cons (cdr (car obj)) (cdr obj)))
@@ -43,7 +37,7 @@
 	(
 	    if(and (not(null? obj)) (ld? listdiff))
 	    (cons (cons obj (car listdiff)) (cdr listdiff))
-	    (error "What")
+	    ( "What")
 	)
 
 )
@@ -52,7 +46,9 @@
 (
     define (car-ld listdiff)
 	(
-	    car (car listdiff)
+            if (null-ld? listdiff)
+            (error "error")
+	    (car (car listdiff))
 	)
 
 )
@@ -61,17 +57,19 @@
 (
     define (cdr-ld listdiff)
         (
-	   cons ((cdr (car listdiff)) (cdr listdiff)) 
+	   if(null-ld? listdiff)
+	   ("error")
+	   (cons ((cdr (car listdiff)) (cdr listdiff)) )
 	)
 )
 
 ; returns a newly allocated listdiff of its argument
-; would need tail-recursioni (maybe not)
+; would need tail-recursion (maybe not)
 ; (obj.'())
 (
-    define (ld obj)
+    define (ld obj . args)
 	(
-	    cons(cons (car obj) (cdr obj)) '()
+	    cons(cons obj args) '()
 	)
 )
 
@@ -89,15 +87,10 @@
 (
     define (append-ld listdiff . v)
         (
+            if(null? v)
             listdiff
-	    (cons (cons (car listdiff) (car (car carv) ))(append-ld (cons (cdr listdiff) (cdr v) )))  
+	    (cons (cons (car listdiff) (car (car v) ))(append-ld (cons (cdr listdiff) (cdr v) )))  
         )
-)
-
-(
-    define (map-ld proc list1 . lists)(
-        
-    )
 )
 
 (
@@ -112,6 +105,7 @@
 (
     define (list->ld list)
         (
+            if(list? list)
             ld list
         )
 
@@ -128,49 +122,24 @@
 )
 
 (
-    define (ld->list listdiff)
-        (
-            
+    define (aux listdiff acc) (
+	if (memberx (cdr listdiff) (car listdiff))
+	acc
+	(aux listdiff (append acc (car listdiff)))
         )
-)
-
+)     
+    
 (
-    define (map-ld proc listdiff1 listdiff2)
-        (
-	
-        )
+    define (ld->list listdiff)
+            (aux listdiff '())
 )
 
-(define (lsadasd? obj)
-	(cond 
-	      [
-		(and (equal? (length (cdr obj) 1)) (equal? (length (car obj) 1 )) (eq? (car obj) (cdr obj)))
-		#t
-	      ]
-	      [
-	        (and (equal? (length (cdr obj)) 1) (equal! (length (car obj))))
-		#f
-	      ]
-	      [
-		(and (null? (car obj)) (null? (cdr obj)))
-		#t
-	      ]
-	      [
-		(null? (car obj)) 
-		#f
-	      ]
-	      [
-		(null? (cdr obj)) 
-		#f
-	      ]
-	      [
-		(eq? (car (car obj)) (car (cdr obj))) 
-		(ld? (cons (cdr (car obj)) (cdr (cdr obj))))
-	      ]
-	      [
-		else 
-		(ld? (cons (cdr (car obj)) (cdr obj)))
-	      ]
-	)
-)
 
+
+(define ils (append '(a e i o u) 'y))
+(define d1 (cons ils (cdr (cdr ils))))
+(define d2 (cons ils ils))
+(define d3 (cons ils (append '(a e i o u) 'y)))
+(define d4 (cons '() ils))
+(define d5 0)
+(define d6 (ld ils d1 37))
