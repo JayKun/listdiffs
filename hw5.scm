@@ -1,12 +1,3 @@
-
-
-; A list is made up of pairs and one pair has the firm (car.cdr)
-; A list of the elements 2,3 is made up like (2.(3.() ))
-; A list that has a pair as it's cdr can be shown without the dot
-; and the parents such that (2.(3.())) is the same as (2 3 .())
-
-
-
 (
     define (null-ld? obj)
 	(if
@@ -23,7 +14,7 @@
 		    (null-ld? obj) #t
 		]
 		[
-		    (or (not (pair? obj)) (not (pair? (car obj) ) ) (null? obj)) 		    #f
+		    (or (not (pair? obj)) (not (pair? (car obj) ) ) (null? obj)) #f
 		]
 		[
 		    else (ld? (cons (cdr (car obj)) (cdr obj)))
@@ -39,7 +30,7 @@
 	(
 	    if(and (not(null? obj)) (ld? listdiff))
 	    (cons (cons obj (car listdiff)) (cdr listdiff))
-	    ( "What")
+	    ( error "error")
 	)
 
 )
@@ -71,7 +62,9 @@
 (
     define (ld obj . args)
 	(
-	    cons(cons obj args) '()
+            if( or (null? obj) (null? args) )
+            '()
+	    (cons(cons obj args) '())
 	)
 )
 
@@ -136,13 +129,40 @@
     
 (
     define (ld->list listdiff)
-            ;(aux listdiff '())
     (
         if(or (not(ld? listdiff)) (null-ld? listdiff))
         (error "error")
         (take (car listdiff) (length-ld listdiff))
     )
 )
+
+(
+    define (getlist listdiffs k)(
+        if(or (null-ld? listdiffs) (not(pair? listdiffs)))
+        '()
+        (cons (list-ref (car (car listdiffs)) k)  (getlist (cdr listdiffs) k))
+    )
+)
+
+(
+    define (map-aux proc max_k k listdiffs)(
+        if (equal? k max_k)
+        '()
+        (cons (apply proc (getlist listdiffs k)) (map-aux proc max_k (+ k 1) listdiffs))
+    )
+
+)
+
+(
+    define (map-ld proc . listdiffs)(
+        let ([len (length-ld (car listdiffs))])
+          (
+               map-aux proc len 0 listdiffs
+          )
+        
+    )
+)
+
 
 (
     define (expr2ld expr)(
@@ -216,3 +236,6 @@ define (util e) (
 (define d5 0)
 (define d6 (ld ils d1 37))
 (define d7 (append-ld d1 d2 d6))
+(define e1 (expr2ld '(map (lambda (x) (+ x 1))
+                          (list (length (list d1)) 2 4 8)
+                          (append (list) (list-tail (list 1 16 32) 1)))))
