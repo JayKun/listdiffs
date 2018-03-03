@@ -3,7 +3,8 @@
 (ld? d3)                               
 (ld? d4)                               
 (ld? d5)                              
-(ld? d6)                               
+(ld? d6)
+(ld? d7)                               
 
 (null-ld? d1)                         
 (null-ld? d2)                         
@@ -18,4 +19,31 @@
 (length-ld d1)                       
 (length-ld d2)                      
 (length-ld d3)                         
-(length-ld d6)                    
+(length-ld d6)
+(length-ld d7)  
+
+(define kv1 (cons d1 'a))
+(define kv2 (cons d2 'b))
+(define kv3 (cons d3 'c))
+(define kv4 (cons d1 'd))
+(define d8 (ld kv1 kv2 kv3 kv4))
+(define d9 (ld kv3 kv4)) 
+
+(eq? d8 (ld-tail d8 0))               
+(equal? (ld->list (ld-tail d8 2))
+        (ld->list d9))                 
+(null-ld? (ld-tail d8 4))              
+(ld-tail d8 -1)                       
+(ld-tail d8 5)                         
+
+(eq? (car-ld d6) ils)                  
+(eq? (car-ld (cdr-ld d6)) d1)          
+(eqv? (car-ld (cdr-ld (cdr-ld d6))) 37)
+(equal? (ld->list d6)
+        (list ils d1 37))             
+(eq? (list-tail (car d6) 3) (cdr d6)) 
+
+(equal? e1 '(map-ld (lambda (x) (+ x 1))
+                    (ld (length-ld (ld d1)) 2 4 8)
+                    (append-ld (ld) (ld-tail (ld 1 16 32) 1))))
+                                                     
