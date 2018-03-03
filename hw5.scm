@@ -89,9 +89,10 @@
 (
     define (append-ld listdiff . args)
     (
-                if (null-ld? args) 
+                if (or (null-ld? args) (null? args)) 
                     listdiff
-	        (append-ld (cons (append (ld->list listdiff)(car (car args))) (cdr (car args)))  (cdr args))
+	        (apply append-ld (cons (append (ld->list listdiff)(car (car args))) (cdr (car args))) (cdr args))
+    )
     
 )
 
@@ -143,7 +144,9 @@
     )
 )
 
-
+(
+    define (map)
+)
 
 (define ils (append '(a e i o u) 'y))
 (define d1 (cons ils (cdr (cdr ils))))
