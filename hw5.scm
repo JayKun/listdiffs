@@ -109,9 +109,9 @@
 (
     define (list->ld list)
         (
-            if(not (list? list))
+            if (or (not (pair? list)) (not (list? list)))
             (error "error")
-            (ld cons( (car list) (cdr list) ) )
+            (apply ld (car list) (cdr list) )
         )
 
 )
@@ -144,9 +144,6 @@
     )
 )
 
-(
-    define (map)
-)
 
 (define ils (append '(a e i o u) 'y))
 (define d1 (cons ils (cdr (cdr ils))))
@@ -155,3 +152,4 @@
 (define d4 (cons '() ils))
 (define d5 0)
 (define d6 (ld ils d1 37))
+(define d7 (append-ld d1 d2 d6))
