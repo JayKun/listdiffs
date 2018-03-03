@@ -144,6 +144,69 @@
     )
 )
 
+(
+    define (expr2ld expr)(
+        cond[(null? expr)
+            expr]
+        [(list? expr)
+	   ( cons (expr2ld (car expr)) (expr2ld (cdr expr)) )
+        ]
+        [
+           (util expr)
+        ]
+   
+    )
+)
+
+(
+define (util e) (
+    cond
+    [ 
+      (equal? e 'null)
+      'null-ld
+    ]
+    [
+      (equal? e 'list?)
+      'ld?
+    ]
+    [
+      (equal? e 'cons)
+      'cons-ld
+    ]
+    [
+      (equal? e 'car)
+      'car-ld
+    ]
+    [
+      (equal? e 'cdr)
+      'cdr-ld
+    ]
+    [
+      (equal? e 'list)
+      'ld
+    ]
+    [
+      (equal? e 'length)
+      'length-ld
+    ]
+    [
+      (equal? e 'append)
+      'append-ld
+    ]
+    [
+      (equal? e 'list-tail)
+      'ld-tail
+    ]
+    [
+      (equal? e 'map)
+      'map-ld
+    ]
+    [
+      else e
+    ]
+     
+     )
+)
 
 (define ils (append '(a e i o u) 'y))
 (define d1 (cons ils (cdr (cdr ils))))
