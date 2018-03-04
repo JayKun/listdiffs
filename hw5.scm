@@ -141,14 +141,18 @@
         if(or (null-ld? listdiffs) (not(pair? listdiffs)))
         '()
         (
-            let ([lst (if(list? (car(car listdiffs))) (car listdiffs) listdiffs)])
-            ( cons (list-ref (car lst) k)  (getlist k (car args) (cdr args) ))
-        ) 
+            let (
+		[lst (if(list? (car(car listdiffs))) (car listdiffs) listdiffs)]
+                [next (list (cdr args))])
+	        (cons (list-ref (car lst) k)  (if (null? (car args))'()(getlist k (car (car args))(cdr (car args) ))))
+        )
    ) 
 )
 
 (
-    define (map-aux proc max_k k listdiffs)(
+    define (map-aux proc max_k k listdiffs)
+    (
+        
         if (equal? k max_k)
         '()
         (cons (apply proc (getlist k (car listdiffs) (cdr listdiffs) )) (map-aux proc max_k (+ k 1) listdiffs))
