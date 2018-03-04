@@ -60,11 +60,11 @@
 ; would need tail-recursion (maybe not)
 ; (obj.'())
 (
-    define (ld . obj )
+    define (ld obj . args)
 	(
-            if(null? obj)
+            if( or (null? obj) (null? args) )
             '()
-	    (cons(cons (car obj) ( cdr obj)) '())
+	    (cons(cons obj args) '())
 	)
 )
 
@@ -137,34 +137,29 @@
 )
 
 (
-    define ( getlist k listdiffs . args)(
+    define (getlist listdiffs k)(
         if(or (null-ld? listdiffs) (not(pair? listdiffs)))
         '()
-        (
-            let ([lst (if(list? (car(car listdiffs))) (car listdiffs) listdiffs)])
-            ( cons (list-ref (car lst) k)  (getlist k (car args) (cdr args) ))
-        ) 
-   ) 
+        (cons (list-ref (car (car listdiffs)) k)  (getlist (cdr listdiffs) k))
+    )
 )
 
 (
     define (map-aux proc max_k k listdiffs)(
         if (equal? k max_k)
         '()
-        (cons (apply proc (getlist k (car listdiffs) (cdr listdiffs) )) (map-aux proc max_k (+ k 1) listdiffs))
+        (cons (apply proc (getlist listdiffs k)) (map-aux proc max_k (+ k 1) listdiffs))
     )
 
 )
 
 (
-    define ( map-ld proc . listdiffs)(
-         if(null? listdiffs) '()
-
-        (let ([len (length-ld (car listdiffs) )])
+    define (map-ld proc . listdiffs)(
+        let ([len (length-ld (car listdiffs))])
           (
-               list->ld(map-aux proc len 0 listdiffs)
+               map-aux proc len 0 listdiffs
           )
-        )
+        
     )
 )
 
